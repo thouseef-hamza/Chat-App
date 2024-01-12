@@ -31,12 +31,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "accounts.apps.AccountsConfig",
+    "core",
     "tailwind",
     "theme",
     'django_browser_reload',
@@ -59,7 +62,7 @@ ROOT_URLCONF = "chat.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": ["templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -73,6 +76,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "chat.wsgi.application"
+ASGI_APPLICATION = 'chat.asgi.application'
 
 
 # Database
@@ -121,6 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [BASE_DIR / 'static']    
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -135,4 +140,18 @@ INTERNAL_IPS = [
 ]
 NPM_BIN_PATH = "C:/Program Files (x86)/npm.cmd"
 
+AUTH_USER_MODEL="accounts.User"
+
 TAILWIND_APP_NAME = 'theme'
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/chat-admin/'
+LOGOUT_REDIRECT_URL = '/'
+
+# Django-Channels Configuration
+# -----------------------------
+CHANNEL_LAYERS = {
+    "default":{
+        "BACKEND":"channels.layers.InMemoryChannelLayer",
+    }
+}
